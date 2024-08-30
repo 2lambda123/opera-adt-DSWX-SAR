@@ -48,29 +48,19 @@ def crop_and_save_mgrs_tile_spacing(
     """Crop the product along the MGRS tile grid and
     save it as a Cloud-Optimized GeoTIFF (COG).
 
-    Parameters
-    ----------
-    source_tif_path : str
-        Path to the original TIFF file.
-    output_dir_path : str
-        Path to the directory to save the output file.
-    output_tif_name : str
-        Filename for the cropped GeoTIFF.
-    output_bbox : list
-        List of bounding box
-        i.e. [x_min, y_min, x_max, y_max]
-    output_epsg : int
-        EPSG for output GeoTIFF
-    output_format : str
-        Output file format (i.e., COG, GeoTIFF)
-    metadata : dict
-        Dictionary for metadata
-    cog_compression: str
-        Compression method for COG
-    cog_nbits: int
-        Compression nbits
-    interpolation_method : str
-        Interpolation method for cropping, by default 'nearest'.
+    :param source_tif_path: 
+    :param output_dir_path: 
+    :param output_tif_name: 
+    :param output_bbox: 
+    :param output_epsg: 
+    :param output_spacing: 
+    :param output_format: 
+    :param metadata: 
+    :param cog_compression: 
+    :param cog_nbits: 
+    :param interpolation_method:  (Default value = "nearest")
+
+    
     """
     input_tif_obj = gdal.Open(source_tif_path)
     band = input_tif_obj.GetRasterBand(1)
@@ -113,19 +103,15 @@ def crop_and_save_mgrs_tile_spacing(
 def find_intersecting_frames_with_bbox(ref_bbox, ref_epsg, input_rtc_files):
     """Find bursts overlapped with the reference bbox.
 
-    Parameters
-    ----------
-    ref_bbox: list
-        Bounding box, minx, miny, maxx, maxy
-    ref_epsg: int
-        reference EPSG code.
-    input_rtc_dirs: list
-        List of rtc directories
+    :param ref_bbox: Bounding box, minx, miny, maxx, maxy
+    :type ref_bbox: list
+    :param ref_epsg: reference EPSG code.
+    :type ref_epsg: int
+    :param input_rtc_dirs: List of rtc directories
+    :type input_rtc_dirs: list
+    :param input_rtc_files: 
 
-    Returns
-    -------
-    overlapped_rtc_dir_list: list
-        List of rtc bursts overlapped with given bbox
+    
     """
     minx, miny, maxx, maxy = ref_bbox
     ref_polygon = Polygon([(minx, miny), (minx, maxy), (maxx, maxy), (maxx, miny)])
@@ -166,22 +152,15 @@ def get_intersecting_mgrs_tiles_list_from_db(
     that intersect a reference GeoTIFF file
     By searching in database
 
-    Parameters
-    ----------
-    image_tif: str
-        Path to the input GeoTIFF file.
-    mgrs_collection_file : str
-        Path to the MGRS tile collection.
-    track_number : int, optional
-        Track number (or relative orbit number) to specify
-        MGRS tile collection
+    :param image_tif: Path to the input GeoTIFF file.
+    :type image_tif: str
+    :param mgrs_collection_file: Path to the MGRS tile collection.
+    :type mgrs_collection_file: str
+    :param track_number: Track number (or relative orbit number) to specify
+        MGRS tile collection (Default value = None)
+    :type track_number: int, optional
 
-    Returns
-    ----------
-    mgrs_list: list
-        List of intersecting MGRS tiles.
-    most_overlapped : GeoSeries
-        The record of the MGRS tile with the maximum overlap area.
+    
     """
     # Load the raster data
     with rasterio.open(image_tif) as src:
@@ -245,8 +224,10 @@ def get_intersecting_mgrs_tiles_list_from_db(
 
 
 def run(cfg):
-    """
-    Run save mgrs tiles with parameters in cfg dictionary
+    """Run save mgrs tiles with parameters in cfg dictionary
+
+    :param cfg: 
+
     """
     logger.info("Starting DSWx-NI save_mgrs_tiles")
 
@@ -859,6 +840,7 @@ def run(cfg):
 
 
 def main():
+    """ """
 
     parser = _get_parser()
 

@@ -17,6 +17,11 @@ logger = logging.getLogger("dswx_sar")
 
 
 def run(cfg):
+    """
+
+    :param cfg: 
+
+    """
 
     logger.info("")
     logger.info("Starting DSWx-S1 Preprocessing")
@@ -294,6 +299,7 @@ def run(cfg):
 
 
 def main():
+    """ """
 
     parser = _get_parser()
 
