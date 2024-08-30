@@ -827,12 +827,10 @@ def run(cfg):
                         browse_image_width=browse_image_width,
                         scratch_dir=scratch_dir,
                         flag_collapse_wtr_classes=flag_collapse_wtr_classes,
-                        exclude_inundated_vegetation=
-                        exclude_inundated_vegetation,
+                        exclude_inundated_vegetation=exclude_inundated_vegetation,
                         set_not_water_to_nodata=set_not_water_to_nodata,
                         set_hand_mask_to_nodata=set_hand_mask_to_nodata,
-                        set_layover_shadow_to_nodata=
-                        set_layover_shadow_to_nodata,
+                        set_layover_shadow_to_nodata=set_layover_shadow_to_nodata,
                         set_ocean_masked_to_nodata=set_ocean_masked_to_nodata,
                         save_tif_to_output_dir=save_tif_to_output,
                     )
