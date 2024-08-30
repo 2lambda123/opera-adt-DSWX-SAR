@@ -16,17 +16,17 @@ gdal.DontUseExceptions()
 
 
 np2gdal_conversion = {
-  "byte": 1,
-  "uint8": 1,
-  "int8": 1,
-  "uint16": 2,
-  "int16": 3,
-  "uint32": 4,
-  "int32": 5,
-  "float32": 6,
-  "float64": 7,
-  "complex64": 10,
-  "complex128": 11,
+    "byte": 1,
+    "uint8": 1,
+    "int8": 1,
+    "uint16": 2,
+    "int16": 3,
+    "uint32": 4,
+    "int32": 5,
+    "float32": 6,
+    "float64": 7,
+    "complex64": 10,
+    "complex128": 11,
 }
 
 band_assign_value_dict = {
@@ -86,7 +86,7 @@ collapse_wtr_classes_dict = {
         band_assign_value_dict['ocean_mask'],
     band_assign_value_dict['partial_water']:
         band_assign_value_dict['water'],
-    }
+}
 
 logger = logging.getLogger('dswx_sar')
 
@@ -384,7 +384,7 @@ def _save_as_cog(filename,
 
     logger.info('        COG step 2: save as COG')
     temp_file = tempfile.NamedTemporaryFile(
-                    dir=scratch_dir, suffix='.tif').name
+        dir=scratch_dir, suffix='.tif').name
 
     # Blocks of 512 x 512 => 256 KiB (UInt8) or 1MiB (Float32)
     tile_size = 512
@@ -1321,8 +1321,8 @@ def block_threshold_visualization_rg(
         threshold_overlay = np.full((rows, cols), np.nan)
 
         for threshold, coords in zip(
-             threshold_dict['array'][band_index],
-             threshold_dict['subtile_coord'][band_index]):
+                threshold_dict['array'][band_index],
+                threshold_dict['subtile_coord'][band_index]):
 
             start_row, end_row, start_col, end_col = coords
             threshold_overlay[start_row:end_row, start_col:end_col] = threshold
@@ -1400,7 +1400,7 @@ def _compute_browse_array(
     if exclude_inundated_vegetation:
         browse_arr[
             browse_arr == band_assign_value_dict['inundated_vegetation']] = \
-                band_assign_value_dict['water']
+            band_assign_value_dict['water']
 
     if set_not_water_to_nodata:
         browse_arr[
@@ -1501,7 +1501,7 @@ def _save_array(input_array, output_file, dswx_metadata_dict, geotransform,
     if ctable is not None:
         raster_band.SetRasterColorTable(ctable)
         raster_band.SetRasterColorInterpretation(
-                gdal.GCI_PaletteIndex)
+            gdal.GCI_PaletteIndex)
 
     gdal_ds.FlushCache()
     gdal_ds = None
@@ -1685,7 +1685,7 @@ def create_browse_image(water_geotiff_filename,
         output_height=browse_image_height,
         output_width=browse_image_width,
         logger=logger
-        )
+    )
 
 
 def check_gdal_raster_s3(path_raster_s3: str, raise_error=True):
@@ -1727,6 +1727,7 @@ def check_gdal_raster_s3(path_raster_s3: str, raise_error=True):
 
     return is_gdal_file_exist
 
+
 def _calculate_output_bounds(geotransform,
                              width,
                              length,
@@ -1751,7 +1752,7 @@ def _calculate_output_bounds(geotransform,
         Adjusted bounding box coordinates [x_min, y_min, x_max, y_max].
     """
     x_min = geotransform[0]
-    x_max = x_min + width * geotransform[1] 
+    x_max = x_min + width * geotransform[1]
 
     if geotransform[5] < 0:
         y_max = geotransform[3]
@@ -1794,7 +1795,7 @@ def _perform_warp_in_memory(input_file,
         Path for the scratch directory. The temp file may be saved. 
     debug : bool
         Boolean to eanble/disable the debug mode
-    
+
     Returns
     -------
     gdal.Dataset
@@ -1813,7 +1814,8 @@ def _perform_warp_in_memory(input_file,
             resampleAlg='nearest',
             format='GTIFF'  # Use memory as the output format
         )
-        output_ds = gdal.Warp(f'{scratch}/debug_output.tif', input_ds, options=warp_options)
+        output_ds = gdal.Warp(
+            f'{scratch}/debug_output.tif', input_ds, options=warp_options)
     else:
         warp_options = gdal.WarpOptions(
             xRes=output_spacing,
@@ -1899,12 +1901,14 @@ def partial_water_product(input_file,
                                              debug=False)
     target_high_binary = high_res_image == target_label
     water = _aggregate_10m_to_30m_conv(target_high_binary,
-                                       int(output_spacing / intermediate_spacing),
+                                       int(output_spacing /
+                                           intermediate_spacing),
                                        normalize_flag=False)
-    
+
     if intermediate_spacing == output_spacing:
         if logger is not None:
-            logger.info('Partial Surface water was disable due to same spacings in input and output.')
+            logger.info(
+                'Partial Surface water was disable due to same spacings in input and output.')
         threshold = 1
 
     full_water = water >= threshold
@@ -1955,6 +1959,6 @@ def _aggregate_10m_to_30m_conv(image, ratio, normalize_flag):
         pixel_count = pixel_count[ratio//2::ratio,
                                   ratio//2::ratio]
 
-        aggregated_data = aggregated_data /pixel_count
+        aggregated_data = aggregated_data / pixel_count
 
     return aggregated_data

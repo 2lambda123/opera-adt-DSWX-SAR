@@ -242,7 +242,7 @@ def run(cfg):
                         filtering_method = filter_SAR.tv_bregman
                         filter_option = vars(filter_options.bregman)
                     filtered_intensity = filtering_method(
-                                                intensity, **filter_option)
+                        intensity, **filter_option)
                 else:
                     filtered_intensity = intensity
 

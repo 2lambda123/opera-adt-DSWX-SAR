@@ -208,12 +208,12 @@ def get_intersecting_mgrs_tiles_list_from_db(
         # Reproject to EPSG 4326 if the current EPSG is not 4326
         if epsg_code != 4326:
             left, bottom, right, top = transform_bounds(
-                                                src.crs,
-                                                'EPSG:4326',
-                                                left,
-                                                bottom,
-                                                right,
-                                                top)
+                src.crs,
+                'EPSG:4326',
+                left,
+                bottom,
+                right,
+                top)
 
     antimeridian_crossing_flag = False
     if left > 0 and right < 0:
@@ -427,7 +427,7 @@ def run(cfg):
         count_pols = []
         for input_dir in input_list:
             pol_types = DSWX_NI_POL_DICT['DV_POL'] + \
-                        DSWX_NI_POL_DICT['DH_POL']
+                DSWX_NI_POL_DICT['DH_POL']
             # Initialize count
             count_pol = 0
             # Count files for each polarization type
@@ -465,7 +465,7 @@ def run(cfg):
         'no_data_area': 'no_data_area',
         'region_growing': 'region_growing_output_binary',
         'fuzzy_value': 'fuzzy_image'
-        }
+    }
 
     if total_inundated_vege_flag:
         if len(pol_set1) == 2 and len(pol_set2) == 2:
@@ -554,7 +554,7 @@ def run(cfg):
             # if target_file_type is auto and GLAD is provided,
             # GLAD is the source of inundated vegetation mapping
             interp_glad_path_str = os.path.join(
-                scratch_dir,'interpolated_glad.tif')
+                scratch_dir, 'interpolated_glad.tif')
 
             if os.path.exists(interp_glad_path_str):
                 inundated_vege_cfg.target_area_file_type = 'GLAD'
@@ -627,7 +627,7 @@ def run(cfg):
             inundated_vegetation=inundated_vegetation == 2,
             no_data=no_data_raster,
             ocean_mask=ocean_mask
-            )
+        )
 
         # water/ No-water
         # layover shadow mask/hand mask/no_data
@@ -661,7 +661,7 @@ def run(cfg):
             bright_water_fill=bright_water_mask,
             dark_land_mask=dark_land_mask,
             inundated_vegetation_conf=(inundated_vege_high_ratio == 1) &
-                (wetland == 0) & (water_map == 0),
+            (wetland == 0) & (water_map == 0),
             wetland_nonwater=(water_map == 0) & wetland,
             wetland_water=(water_map == 1) & wetland,
             wetland_bright_water_fill=bright_water_mask & wetland,
@@ -672,7 +672,7 @@ def run(cfg):
             hand_mask=hand_mask,
             ocean_mask=ocean_mask,
             no_data=no_data_raster,
-            )
+        )
 
         # Values ranging from 0 to 100 are used to represent the likelihood
         # or possibility of the presence of water. A higher value within
@@ -698,15 +698,15 @@ def run(cfg):
         # In Twele's workflow, bright water/dark land/inundated vegetation
         # is not saved.
         dswx_sar_util.save_dswx_product(
-                water_map == 1,
-                full_wtr_water_set_path,
-                geotransform=water_meta['geotransform'],
-                projection=water_meta['projection'],
-                description='Water classification (WTR)',
-                scratch_dir=scratch_dir,
-                layover_shadow_mask=layover_shadow_mask > 0,
-                hand_mask=hand_mask,
-                no_data=no_data_raster)
+            water_map == 1,
+            full_wtr_water_set_path,
+            geotransform=water_meta['geotransform'],
+            projection=water_meta['projection'],
+            description='Water classification (WTR)',
+            scratch_dir=scratch_dir,
+            layover_shadow_mask=layover_shadow_mask > 0,
+            hand_mask=hand_mask,
+            no_data=no_data_raster)
 
     if partial_water_flag:
         new_water_meta = water_meta.copy()
@@ -720,7 +720,7 @@ def run(cfg):
             input_file=full_wtr_water_set_path,
             output_spacing=output_spacing,
             scratch_dir=scratch_dir,
-            target_label=1, # only open water
+            target_label=1,  # only open water
             threshold=partial_water_threshold,
             logger=logger)
 
@@ -737,11 +737,13 @@ def run(cfg):
             scratch_dir=scratch_dir,
             logger=logger,
             partial_water=partial_open_water == 11,
-            layover_shadow_mask=partial_open_water == band_assign_value_dict['layover_shadow_mask'],
-            hand_mask=partial_open_water==band_assign_value_dict['hand_mask'],
-            inundated_vegetation=partial_open_water==band_assign_value_dict['inundated_vegetation'],
-            no_data=partial_open_water==band_assign_value_dict['no_data'],
-            ocean_mask=partial_open_water==band_assign_value_dict['ocean_mask'],)
+            layover_shadow_mask=partial_open_water == band_assign_value_dict[
+                'layover_shadow_mask'],
+            hand_mask=partial_open_water == band_assign_value_dict['hand_mask'],
+            inundated_vegetation=partial_open_water == band_assign_value_dict[
+                'inundated_vegetation'],
+            no_data=partial_open_water == band_assign_value_dict['no_data'],
+            ocean_mask=partial_open_water == band_assign_value_dict['ocean_mask'],)
 
     # Get list of MGRS tiles overlapped with mosaic RTC image
     mgrs_meta_dict = {}
@@ -752,7 +754,7 @@ def run(cfg):
                 mgrs_collection_file=mgrs_collection_db_path,
                 image_tif=paths['final_water'],
                 track_number=track_number
-                )
+            )
         maximum_frame = most_overlapped['number_of_frames']
         # convert string to list
         expected_frame_list = ast.literal_eval(most_overlapped['frames'])
