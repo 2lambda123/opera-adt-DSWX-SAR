@@ -163,7 +163,7 @@ def read_geotiff(input_tif_str, band_ind=None, verbose=True):
     :type band_ind: int
     :param verbose:  (Default value = True)
 
-    
+
     """
     tif = gdal.Open(input_tif_str)
     if band_ind is None:
@@ -184,14 +184,14 @@ def save_raster_gdal(
 ):
     """Save images using Gdal
 
-    :param data: 
-    :param output_file: 
-    :param geotransform: 
-    :param projection: 
+    :param data:
+    :param output_file:
+    :param geotransform:
+    :param projection:
     :param scratch_dir:  (Default value = ".")
     :param datatype:  (Default value = "float32")
 
-    
+
     """
     gdal_type = np2gdal_conversion[str(datatype)]
     image_size = data.shape
@@ -240,19 +240,19 @@ def save_dswx_product(
 ):
     """Save DSWx product for assigned classes with colortable
 
-    :param wtr: 
-    :param output_file: 
-    :param geotransform: 
-    :param projection: 
+    :param wtr:
+    :param output_file:
+    :param geotransform:
+    :param projection:
     :param scratch_dir:  (Default value = ".")
     :param description:  (Default value = None)
     :param metadata:  (Default value = None)
     :param is_diag:  (Default value = False)
     :param datatype:  (Default value = "uint8")
     :param logger:  (Default value = None)
-    :param **dswx_processed_bands: 
+    :param **dswx_processed_bands:
 
-    
+
     """
     shape = wtr.shape
     driver = gdal.GetDriverByName("GTiff")
@@ -320,7 +320,7 @@ def _save_as_cog(
 ):
     """Save (overwrite) a GeoTIFF file as a cloud-optimized GeoTIFF.
 
-    :param filename: 
+    :param filename:
     :param scratch_dir:  (Default value = ".")
     :param logger:  (Default value = None)
     :param flag_compress:  (Default value = True)
@@ -328,7 +328,7 @@ def _save_as_cog(
     :param compression:  (Default value = "DEFLATE")
     :param nbits:  (Default value = 16)
 
-    
+
     """
     if logger is None:
         logger = logging.getLogger("proteus")
@@ -432,13 +432,13 @@ def change_epsg_tif(
 ):
     """Resample the input geotiff image to new EPSG code.
 
-    :param input_tif: 
-    :param output_tif: 
-    :param epsg_output: 
+    :param input_tif:
+    :param output_tif:
+    :param epsg_output:
     :param resample_method:  (Default value = "nearest")
     :param output_nodata:  (Default value = "NaN")
 
-    
+
     """
     metadata = get_meta_from_tif(input_tif)
 
@@ -497,12 +497,12 @@ def get_invalid_area(
     """get invalid areas (NaN) from GeoTiff and save it
     to new GeoTiff
 
-    :param geotiff_path: 
+    :param geotiff_path:
     :param output_path:  (Default value = None)
     :param scratch_dir:  (Default value = None)
     :param lines_per_block:  (Default value = None)
 
-    
+
     """
     im_meta = get_meta_from_tif(geotiff_path)
 
@@ -539,9 +539,9 @@ def get_meta_from_tif(tif_file_name):
 
     :param input_tif_str: geotiff file path to read the band
     :type input_tif_str: str
-    :param tif_file_name: 
+    :param tif_file_name:
 
-    
+
     """
     if type(tif_file_name) is list:
         tif_name = tif_file_name[0]
@@ -587,7 +587,7 @@ def _get_tile_srs_bbox(
            SRS is geographic, its Axis Mapping Strategy will
     :type polygon_srs: osr.SpatialReference
 
-    
+
     """
 
     # forces returned values from TransformPoint() to be (x, y, z)
@@ -672,9 +672,9 @@ def _create_ocean_mask(
            paths to the temporary files generated will be
            appended to this list. (Default value = None)
     :type temp_files_list: list (optional)
-    :param polygon_water: 
+    :param polygon_water:
 
-    
+
     """
     logger.info("creating the ocean mask")
 
@@ -769,11 +769,11 @@ def _create_ocean_mask(
 def create_geotiff_with_one_value(outpath, shape, filled_value):
     """Create a new GeoTIFF file filled with a specified value.
 
-    :param outpath: 
-    :param shape: 
-    :param filled_value: 
+    :param outpath:
+    :param shape:
+    :param filled_value:
 
-    
+
     """
     # Set up the new file's spatial properties
     height, width = shape
@@ -801,7 +801,7 @@ def get_raster_block(raster_path, block_param):
         and amount of padding for the read array
     :type block_param: BlockParam
 
-    
+
     """
     # Open input data using GDAL to get raster length
     ds_data = gdal.Open(raster_path, gdal.GA_Update)
@@ -848,16 +848,16 @@ def write_raster_block(
 ):
     """Write processed data block to the specified raster file.
 
-    :param out_raster: 
-    :param data: 
-    :param block_param: 
-    :param geotransform: 
-    :param projection: 
+    :param out_raster:
+    :param data:
+    :param block_param:
+    :param geotransform:
+    :param projection:
     :param datatype:  (Default value = "byte")
     :param cog_flag:  (Default value = False)
     :param scratch_dir:  (Default value = ".")
 
-    
+
     """
     gdal_type = np2gdal_conversion[datatype]
 
@@ -929,7 +929,7 @@ def block_param_generator(lines_per_block, data_shape, pad_shape):
     :param pad_shape: Padding for the length and width of block to be filtered.
     :type pad_shape: tuple(int, int)
 
-    
+
     """
     data_length, data_width = data_shape
     pad_length, pad_width = pad_shape
@@ -1070,7 +1070,7 @@ def merge_binary_layers(
     :param scratch_dir: Path to scratch dir. Defaults to '.'.
     :type scratch_dir: str, optional
 
-    
+
     """
 
     if len(layer_list) != len(value_list):
@@ -1118,13 +1118,13 @@ def merge_binary_layers(
 def intensity_display(intensity, outputdir, pol, immin=-30, immax=0):
     """save intensity images into png file
 
-    :param intensity: 
-    :param outputdir: 
-    :param pol: 
+    :param intensity:
+    :param outputdir:
+    :param pol:
     :param immin:  (Default value = -30)
     :param immax:  (Default value = 0)
 
-    
+
     """
     plt.figure(figsize=(20, 20))
     _, ax = plt.subplots(1, 1, figsize=(15, 15))
@@ -1141,14 +1141,14 @@ def block_threshold_visualization(
     """Visualize an intensity image overlaid with threshold values from
     specified blocks/subtiles.
 
-    :param intensity: 
-    :param block_row: 
-    :param block_col: 
-    :param threshold_tile: 
-    :param output_dir: 
-    :param fig_name: 
+    :param intensity:
+    :param block_row:
+    :param block_col:
+    :param threshold_tile:
+    :param output_dir:
+    :param fig_name:
 
-    
+
     """
 
     if intensity.ndim == 2:
@@ -1210,7 +1210,7 @@ def block_threshold_visualization_rg(intensity, threshold_dict, outputdir, figna
     :param figname: Base name for the saved visualization figures.
     :type figname: str
 
-    
+
     """
     # Determine the dimensions and the number of bands based on the shape of
     # the intensity array
@@ -1298,7 +1298,7 @@ def _compute_browse_array(
     :type set_layover_shadow_to_nodata: bool
     :param set_ocean_masked_to_nodata:  (Default value = True)
 
-    
+
     """
 
     # Create a copy of the masked_interpreted_water_layer.
@@ -1343,7 +1343,7 @@ def _collapse_wtr_classes(interpreted_layer):
     :param interpreted_layer: Interpreted layer
     :type interpreted_layer: np.ndarray
 
-    
+
     """
     collapsed_interpreted_layer = np.full_like(
         interpreted_layer, band_assign_value_dict["no_data"]
@@ -1369,11 +1369,11 @@ def _save_array(
     """Save a generic DSWx-SAR layer
     (e.g., diagnostic layer, shadow layer, etc.)
 
-    :param input_array: 
-    :param output_file: 
-    :param dswx_metadata_dict: 
-    :param geotransform: 
-    :param projection: 
+    :param input_array:
+    :param output_file:
+    :param dswx_metadata_dict:
+    :param geotransform:
+    :param projection:
     :param description:  (Default value = None)
     :param scratch_dir:  (Default value = ".")
     :param output_files_list:  (Default value = None)
@@ -1381,7 +1381,7 @@ def _save_array(
     :param ctable:  (Default value = None)
     :param no_data_value:  (Default value = None)
 
-    
+
     """
     os.makedirs(scratch_dir, exist_ok=True)
 
@@ -1423,13 +1423,13 @@ def geotiff2png(
 ):
     """Convert a GeoTIFF file to a png file.
 
-    :param src_geotiff_filename: 
-    :param dest_png_filename: 
+    :param src_geotiff_filename:
+    :param dest_png_filename:
     :param output_height:  (Default value = None)
     :param output_width:  (Default value = None)
     :param logger:  (Default value = None)
 
-    
+
     """
     # Load the source dataset
     gdal_ds = gdal.Open(src_geotiff_filename, gdal.GA_ReadOnly)
@@ -1489,7 +1489,7 @@ def create_browse_image(
     save_tif_to_output_dir=False,
 ):
     """Process a water-related GeoTIFF file to create a browse image.
-    
+
     The function performs the following steps:
     - Opens the specified GeoTIFF file and reads the water layer.
     - Extracts relevant metadata for geospatial referencing.
@@ -1527,7 +1527,7 @@ def create_browse_image(
     :param save_tif_to_output_dir: If True, save browse GeoTIff to output directory. (Default value = False)
     :type save_tif_to_output_dir: bool, optional
 
-    
+
     """
     # # Build the browse image
     # # Create the source image as a geotiff
@@ -1583,7 +1583,7 @@ def create_browse_image(
 
 def check_gdal_raster_s3(path_raster_s3: str, raise_error=True):
     """Check if the GDAL raster in S3 bucket is available
-    
+
     Parameter
     ---------
     path_raster_s3: str
@@ -1592,13 +1592,13 @@ def check_gdal_raster_s3(path_raster_s3: str, raise_error=True):
         Raise an error when the file is not accessible, rather than
         returning a boolean flag
 
-    :param path_raster_s3: str: 
+    :param path_raster_s3: str:
     :param raise_error:  (Default value = True)
     :returns: _->     True when the file is accessible; False otherwise.
         Optional when the parameter `raise_error` is `False`.
     :rtype: Bool
 
-    
+
     """
     if not path_raster_s3.startswith("/vsis3/"):
         raise RuntimeError(
@@ -1630,7 +1630,7 @@ def _calculate_output_bounds(geotransform, width, length, output_spacing):
     :param output_spacing: Desired spacing for the output, which adjusts the bounding box dimensions.
     :type output_spacing: float
 
-    
+
     """
     x_min = geotransform[0]
     x_max = x_min + width * geotransform[1]
@@ -1672,7 +1672,7 @@ def _perform_warp_in_memory(
     :param debug: Boolean to eanble/disable the debug mode (Default value = False)
     :type debug: bool
 
-    
+
     """
     input_ds = gdal.Open(input_file)
     if not input_ds:
@@ -1736,7 +1736,7 @@ def partial_water_product(
     :type threshold: float
     :param logger:  (Default value = None)
 
-    
+
     """
     meta_info = get_meta_from_tif(input_file)
     geotransform = meta_info["geotransform"]
@@ -1799,7 +1799,7 @@ def _aggregate_10m_to_30m_conv(image, ratio, normalize_flag):
         summation (False).
     :type normalize_flag: bool
 
-    
+
     """
     # Define a 3x3 kernel where all values are 1
     kernel = np.ones((ratio, ratio), dtype=np.int32)
