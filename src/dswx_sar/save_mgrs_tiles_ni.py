@@ -11,28 +11,23 @@ import geopandas as gpd
 import h5py
 import numpy as np
 import rasterio
-from dswx_sar import dswx_sar_util
-from dswx_sar import generate_log
-from dswx_sar import mosaic_gcov_frame
-from dswx_sar.dswx_ni_runconfig import _get_parser
-from dswx_sar.dswx_ni_runconfig import DSWX_NI_POL_DICT
-from dswx_sar.dswx_ni_runconfig import get_pol_rtc_hdf5
-from dswx_sar.dswx_ni_runconfig import RunConfig
-from dswx_sar.dswx_sar_util import _create_ocean_mask
-from dswx_sar.dswx_sar_util import band_assign_value_dict
-from dswx_sar.metadata import _populate_statics_metadata_datasets
-from dswx_sar.metadata import collect_burst_id
-from dswx_sar.metadata import create_dswx_ni_metadata
-from dswx_sar.save_mgrs_tiles import get_bounding_box_from_mgrs_tile
-from dswx_sar.save_mgrs_tiles import get_bounding_box_from_mgrs_tile_db
-from dswx_sar.save_mgrs_tiles import get_intersecting_mgrs_tiles_list
-from dswx_sar.save_mgrs_tiles import merge_pol_layers
 from osgeo import gdal
 from pyproj import Transformer
 from rasterio.warp import transform_bounds
 from shapely import wkt
 from shapely.geometry import Polygon
 from shapely.ops import transform
+
+from dswx_sar import dswx_sar_util, generate_log, mosaic_gcov_frame
+from dswx_sar.dswx_ni_runconfig import (DSWX_NI_POL_DICT, RunConfig,
+                                        _get_parser, get_pol_rtc_hdf5)
+from dswx_sar.dswx_sar_util import _create_ocean_mask, band_assign_value_dict
+from dswx_sar.metadata import (_populate_statics_metadata_datasets,
+                               collect_burst_id, create_dswx_ni_metadata)
+from dswx_sar.save_mgrs_tiles import (get_bounding_box_from_mgrs_tile,
+                                      get_bounding_box_from_mgrs_tile_db,
+                                      get_intersecting_mgrs_tiles_list,
+                                      merge_pol_layers)
 
 logger = logging.getLogger("dswx_sar")
 
