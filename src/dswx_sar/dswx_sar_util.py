@@ -186,8 +186,8 @@ def save_raster_gdal(
     :param geotransform: param projection:
     :param scratch_dir: Default value = ".")
     :param datatype: Default value = "float32")
-    :param output_file: 
-    :param projection: 
+    :param output_file:
+    :param projection:
 
     """
     gdal_type = np2gdal_conversion[str(datatype)]
@@ -245,9 +245,9 @@ def save_dswx_product(
     :param is_diag: Default value = False)
     :param datatype: Default value = "uint8")
     :param logger: Default value = None)
-    :param output_file: 
-    :param projection: 
-    :param **dswx_processed_bands: 
+    :param output_file:
+    :param projection:
+    :param **dswx_processed_bands:
 
     """
     shape = wtr.shape
@@ -431,7 +431,7 @@ def change_epsg_tif(
     :param input_tif: param output_tif:
     :param epsg_output: param resample_method:  (Default value = "nearest")
     :param output_nodata: Default value = "NaN")
-    :param output_tif: 
+    :param output_tif:
     :param resample_method:  (Default value = "nearest")
 
     """
@@ -533,7 +533,7 @@ def get_meta_from_tif(tif_file_name):
 
     :param input_tif_str: geotiff file path to read the band
     :type input_tif_str: str: str
-    :param tif_file_name: 
+    :param tif_file_name:
 
     """
     if type(tif_file_name) is list:
@@ -664,7 +664,7 @@ def _create_ocean_mask(
            paths to the temporary files generated will be
            appended to this list. (Default value = None)
     :type temp_files_list: list: list (optional)
-    :param polygon_water: 
+    :param polygon_water:
 
     """
     logger.info("creating the ocean mask")
@@ -761,8 +761,8 @@ def create_geotiff_with_one_value(outpath, shape, filled_value):
     """Create a new GeoTIFF file filled with a specified value.
 
     :param outpath: param shape:
-    :param filled_value: 
-    :param shape: 
+    :param filled_value:
+    :param shape:
 
     """
     # Set up the new file's spatial properties
@@ -842,8 +842,8 @@ def write_raster_block(
     :param projection: param datatype:  (Default value = "byte")
     :param cog_flag: Default value = False)
     :param scratch_dir: Default value = ".")
-    :param data: 
-    :param geotransform: 
+    :param data:
+    :param geotransform:
     :param datatype:  (Default value = "byte")
 
     """
@@ -1107,7 +1107,7 @@ def intensity_display(intensity, outputdir, pol, immin=-30, immax=0):
     :param intensity: param outputdir:
     :param pol: param immin:  (Default value = -30)
     :param immax: Default value = 0)
-    :param outputdir: 
+    :param outputdir:
     :param immin:  (Default value = -30)
 
     """
@@ -1129,9 +1129,9 @@ def block_threshold_visualization(
     :param intensity: param block_row:
     :param block_col: param threshold_tile:
     :param output_dir: param fig_name:
-    :param block_row: 
-    :param threshold_tile: 
-    :param fig_name: 
+    :param block_row:
+    :param threshold_tile:
+    :param fig_name:
 
     """
 
@@ -1358,8 +1358,8 @@ def _save_array(
     :param output_dtype: Default value = gdal.GDT_Byte)
     :param ctable: Default value = None)
     :param no_data_value: Default value = None)
-    :param output_file: 
-    :param geotransform: 
+    :param output_file:
+    :param geotransform:
     :param description:  (Default value = None)
 
     """
@@ -1407,7 +1407,7 @@ def geotiff2png(
     :param output_height: Default value = None)
     :param output_width: Default value = None)
     :param logger: Default value = None)
-    :param dest_png_filename: 
+    :param dest_png_filename:
 
     """
     # Load the source dataset
@@ -1468,7 +1468,7 @@ def create_browse_image(
     save_tif_to_output_dir=False,
 ):
     """Process a water-related GeoTIFF file to create a browse image.
-    
+
     The function performs the following steps:
     - Opens the specified GeoTIFF file and reads the water layer.
     - Extracts relevant metadata for geospatial referencing.
@@ -1561,7 +1561,7 @@ def create_browse_image(
 
 def check_gdal_raster_s3(path_raster_s3: str, raise_error=True):
     """Check if the GDAL raster in S3 bucket is available
-    
+
     Parameter
     ---------
     path_raster_s3: str
@@ -1572,7 +1572,7 @@ def check_gdal_raster_s3(path_raster_s3: str, raise_error=True):
 
     :param path_raster_s3: str:
     :param raise_error: Default value = True)
-    :param path_raster_s3: str: 
+    :param path_raster_s3: str:
     :returns: _->     True when the file is accessible; False otherwise.
         Optional when the parameter `raise_error` is `False`.
     :rtype: Bool
