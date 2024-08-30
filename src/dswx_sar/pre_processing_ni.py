@@ -1,18 +1,17 @@
 import copy
 import logging
 import mimetypes
-import numpy as np
 import os
 import pathlib
 import time
-
 from pathlib import Path
 
+import numpy as np
+
 from dswx_sar import dswx_sar_util, filter_SAR, generate_log, pre_processing
-from dswx_sar.dswx_ni_runconfig import DSWX_NI_POL_DICT, _get_parser, RunConfig
+from dswx_sar.dswx_ni_runconfig import DSWX_NI_POL_DICT, RunConfig, _get_parser
 from dswx_sar.dswx_sar_util import check_gdal_raster_s3
 from dswx_sar.masking_with_ancillary import get_label_landcover_esa_10
-
 
 logger = logging.getLogger("dswx_sar")
 
