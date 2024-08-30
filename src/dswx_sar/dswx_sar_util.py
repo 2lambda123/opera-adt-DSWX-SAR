@@ -8,7 +8,9 @@ from dataclasses import dataclass
 import matplotlib.pyplot as plt
 import numpy as np
 import rasterio
-from osgeo import gdal, ogr, osr
+from osgeo import gdal
+from osgeo import ogr
+from osgeo import osr
 from pyproj import Transformer
 from scipy.signal import convolve2d
 
