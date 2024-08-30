@@ -86,8 +86,7 @@ def run(cfg):
     im_meta = dswx_sar_util.get_meta_from_tif(ref_filename)
 
     # create instance to relocate ancillary data
-    ancillary_reloc = pre_processing.AncillaryRelocation(
-        ref_filename, scratch_dir)
+    ancillary_reloc = pre_processing.AncillaryRelocation(ref_filename, scratch_dir)
 
     # Note : landcover should precede before reference water.
     relocated_ancillary_filename_set = {
@@ -119,7 +118,8 @@ def run(cfg):
 
         # Check if input ancillary data is valid.
         if not os.path.isfile(input_anc_path) and not check_gdal_raster_s3(
-                input_anc_path, raise_error=False):
+            input_anc_path, raise_error=False
+        ):
             err_msg = f"Input {anc_type} file not found"
             raise FileNotFoundError(err_msg)
 
@@ -135,21 +135,22 @@ def run(cfg):
         # crop or relocate ancillary images to fit the reference
         # intensity (RTC) image.
         if not ancillary_path.is_file():
-            logger.info(f"Relocated {anc_type} file will be created from "
-                        f"{input_anc_path}.")
-            ancillary_reloc.relocate(input_anc_path,
-                                     anc_filename,
-                                     method="near",
-                                     no_data=no_data)
+            logger.info(
+                f"Relocated {anc_type} file will be created from " f"{input_anc_path}."
+            )
+            ancillary_reloc.relocate(
+                input_anc_path, anc_filename, method="near", no_data=no_data
+            )
 
         # check if relocated ancillaries are filled with invalid values
         validation_result = pre_processing.validate_gtiff(
-            os.path.join(scratch_dir, anc_filename), [no_data, np.inf])
+            os.path.join(scratch_dir, anc_filename), [no_data, np.inf]
+        )
 
         if validation_result not in ["okay"]:
-            if (anc_type in ["dem", "hand"]) and (validation_result in [
-                    "nan_value", "invalid_only"
-            ]):
+            if (anc_type in ["dem", "hand"]) and (
+                validation_result in ["nan_value", "invalid_only"]
+            ):
                 err_msg = f"Unable to get valid {anc_type}"
                 raise ValueError(err_msg)
 
@@ -162,13 +163,12 @@ def run(cfg):
                 # are invalid.
                 pre_processing.replace_reference_water_nodata_from_ancillary(
                     os.path.join(
-                        scratch_dir,
-                        relocated_ancillary_filename_set["reference_water"]),
+                        scratch_dir, relocated_ancillary_filename_set["reference_water"]
+                    ),
                     os.path.join(
-                        scratch_dir,
-                        relocated_ancillary_filename_set["landcover"]),
-                    os.path.join(scratch_dir,
-                                 relocated_ancillary_filename_set["hand"]),
+                        scratch_dir, relocated_ancillary_filename_set["landcover"]
+                    ),
+                    os.path.join(scratch_dir, relocated_ancillary_filename_set["hand"]),
                     reference_water_max=ref_water_max,
                     reference_water_no_data=ref_water_no_data,
                     line_per_block=line_per_block,
@@ -198,8 +198,7 @@ def run(cfg):
                 for temp_pol in temp_pol_list:
                     filename = f"{scratch_dir}/{mosaic_prefix}_{temp_pol}.tif"
 
-                    block_data = dswx_sar_util.get_raster_block(
-                        filename, block_param)
+                    block_data = dswx_sar_util.get_raster_block(filename, block_param)
 
                     temp_raster_set.append(block_data)
 
@@ -213,14 +212,14 @@ def run(cfg):
                     logger.info(f"  computing ratio {co_pol}/{cross_pol}")
 
                 if pol in ["span"]:
-                    span = np.squeeze(temp_raster_set[0, :, :] +
-                                      2 * temp_raster_set[1, :, :])
+                    span = np.squeeze(
+                        temp_raster_set[0, :, :] + 2 * temp_raster_set[1, :, :]
+                    )
                     output_image_set.append(span)
             else:
                 intensity_path = f"{scratch_dir}/{mosaic_prefix}_{pol}.tif"
 
-                intensity = dswx_sar_util.get_raster_block(
-                    intensity_path, block_param)
+                intensity = dswx_sar_util.get_raster_block(intensity_path, block_param)
                 # need to replace 0 value in padded area to NaN.
                 intensity[intensity == 0] = np.nan
                 if filter_flag:
@@ -230,8 +229,7 @@ def run(cfg):
 
                     elif filter_method == "anisotropic_diffusion":
                         filtering_method = filter_SAR.anisotropic_diffusion
-                        filter_option = vars(
-                            filter_options.anisotropic_diffusion)
+                        filter_option = vars(filter_options.anisotropic_diffusion)
 
                     elif filter_method == "guided_filter":
                         filtering_method = filter_SAR.guided_filter
@@ -240,8 +238,7 @@ def run(cfg):
                     elif filter_method == "bregman":
                         filtering_method = filter_SAR.tv_bregman
                         filter_option = vars(filter_options.bregman)
-                    filtered_intensity = filtering_method(
-                        intensity, **filter_option)
+                    filtered_intensity = filtering_method(intensity, **filter_option)
                 else:
                     filtered_intensity = intensity
 
@@ -261,8 +258,7 @@ def run(cfg):
 
     dswx_sar_util._save_as_cog(filtered_image_path, scratch_dir)
 
-    no_data_geotiff_path = os.path.join(scratch_dir,
-                                        f"no_data_area_{pol_all_str}.tif")
+    no_data_geotiff_path = os.path.join(scratch_dir, f"no_data_area_{pol_all_str}.tif")
 
     dswx_sar_util.get_invalid_area(
         os.path.join(scratch_dir, filtered_images_str),
@@ -281,14 +277,14 @@ def run(cfg):
             else:
                 immin, immax = -30, 0
             single_intensity = np.squeeze(filtered_intensity[pol_ind, :, :])
-            dswx_sar_util.intensity_display(single_intensity, scratch_dir, pol,
-                                            immin, immax)
+            dswx_sar_util.intensity_display(
+                single_intensity, scratch_dir, pol, immin, immax
+            )
 
             if pol in ["ratio"]:
                 dswx_sar_util.save_raster_gdal(
                     data=single_intensity,
-                    output_file=os.path.join(scratch_dir,
-                                             f"intensity_{pol}.tif"),
+                    output_file=os.path.join(scratch_dir, f"intensity_{pol}.tif"),
                     geotransform=im_meta["geotransform"],
                     projection=im_meta["projection"],
                     scratch_dir=scratch_dir,
@@ -296,16 +292,14 @@ def run(cfg):
             else:
                 dswx_sar_util.save_raster_gdal(
                     data=10 * np.log10(single_intensity),
-                    output_file=os.path.join(scratch_dir,
-                                             f"intensity_{pol}_db.tif"),
+                    output_file=os.path.join(scratch_dir, f"intensity_{pol}_db.tif"),
                     geotransform=im_meta["geotransform"],
                     projection=im_meta["projection"],
                     scratch_dir=scratch_dir,
                 )
 
     t_all_elapsed = time.time() - t_all
-    logger.info("successfully ran pre-processing in "
-                f"{t_all_elapsed:.3f} seconds")
+    logger.info("successfully ran pre-processing in " f"{t_all_elapsed:.3f} seconds")
 
 
 def main():
@@ -316,8 +310,7 @@ def main():
     args = parser.parse_args()
 
     mimetypes.add_type("text/yaml", ".yaml", strict=True)
-    flag_first_file_is_text = "text" in mimetypes.guess_type(
-        args.input_yaml[0])[0]
+    flag_first_file_is_text = "text" in mimetypes.guess_type(args.input_yaml[0])[0]
 
     if len(args.input_yaml) > 1 and flag_first_file_is_text:
         logger.info("ERROR only one runconfig file is allowed")

@@ -64,28 +64,21 @@ These classes are collapsed into no-water class
 """
 
 collapse_wtr_classes_dict = {
-    band_assign_value_dict["nonwater"]:
-    band_assign_value_dict["nonwater"],
-    band_assign_value_dict["water"]:
-    band_assign_value_dict["water"],
-    band_assign_value_dict["bright_water_fill"]:
-    band_assign_value_dict["water"],
-    band_assign_value_dict["dark_land_mask"]:
-    band_assign_value_dict["nonwater"],
-    band_assign_value_dict["landcover_mask"]:
-    band_assign_value_dict["nonwater"],
-    band_assign_value_dict["hand_mask"]:
-    band_assign_value_dict["hand_mask"],
-    band_assign_value_dict["layover_shadow_mask"]:
-    band_assign_value_dict["layover_shadow_mask"],
-    band_assign_value_dict["inundated_vegetation"]:
-    band_assign_value_dict["inundated_vegetation"],
-    band_assign_value_dict["no_data"]:
-    band_assign_value_dict["no_data"],
-    band_assign_value_dict["ocean_mask"]:
-    band_assign_value_dict["ocean_mask"],
-    band_assign_value_dict["partial_water"]:
-    band_assign_value_dict["water"],
+    band_assign_value_dict["nonwater"]: band_assign_value_dict["nonwater"],
+    band_assign_value_dict["water"]: band_assign_value_dict["water"],
+    band_assign_value_dict["bright_water_fill"]: band_assign_value_dict["water"],
+    band_assign_value_dict["dark_land_mask"]: band_assign_value_dict["nonwater"],
+    band_assign_value_dict["landcover_mask"]: band_assign_value_dict["nonwater"],
+    band_assign_value_dict["hand_mask"]: band_assign_value_dict["hand_mask"],
+    band_assign_value_dict["layover_shadow_mask"]: band_assign_value_dict[
+        "layover_shadow_mask"
+    ],
+    band_assign_value_dict["inundated_vegetation"]: band_assign_value_dict[
+        "inundated_vegetation"
+    ],
+    band_assign_value_dict["no_data"]: band_assign_value_dict["no_data"],
+    band_assign_value_dict["ocean_mask"]: band_assign_value_dict["ocean_mask"],
+    band_assign_value_dict["partial_water"]: band_assign_value_dict["water"],
 }
 
 logger = logging.getLogger("dswx_sar")
@@ -94,6 +87,7 @@ logger = logging.getLogger("dswx_sar")
 @dataclass
 class Constants:
     """ """
+
     # negligible number to avoid the zero-division warning.
     negligible_value: float = 1e-5
 
@@ -106,55 +100,55 @@ def get_interpreted_dswx_s1_ctable():
     # Non-target areas for Inundated Vegetation
     # set color for each value
     # White - Not water
-    dswx_ctable.SetColorEntry(band_assign_value_dict["nonwater"],
-                              (255, 255, 255))
+    dswx_ctable.SetColorEntry(band_assign_value_dict["nonwater"], (255, 255, 255))
     # Blue - Water (high confidence)
     dswx_ctable.SetColorEntry(band_assign_value_dict["water"], (0, 0, 255))
     # Cyan - Partial Water (high confidence)
-    dswx_ctable.SetColorEntry(band_assign_value_dict["partial_water"],
-                              (0, 255, 255))
+    dswx_ctable.SetColorEntry(band_assign_value_dict["partial_water"], (0, 255, 255))
     # baby blue - bright water
-    dswx_ctable.SetColorEntry(band_assign_value_dict["bright_water_fill"],
-                              (120, 120, 240))
-    #  blue - ocean_mask
-    dswx_ctable.SetColorEntry(band_assign_value_dict["ocean_mask"],
-                              (50, 50, 240))
-    # Red - dark land
-    dswx_ctable.SetColorEntry(band_assign_value_dict["dark_land_mask"],
-                              (240, 20, 20))
-    # Yellow - Landcover mask
-    dswx_ctable.SetColorEntry(band_assign_value_dict["landcover_mask"],
-                              (200, 200, 50))
-    # light gray - Hand mask
-    dswx_ctable.SetColorEntry(band_assign_value_dict["hand_mask"],
-                              (200, 200, 200))
-    # Gray - Layover/shadow mask
-    dswx_ctable.SetColorEntry(band_assign_value_dict["layover_shadow_mask"],
-                              (128, 128, 128))
-    # Green - Inundated vegetation
-    dswx_ctable.SetColorEntry(band_assign_value_dict["inundated_vegetation"],
-                              (0, 255, 0))
     dswx_ctable.SetColorEntry(
-        band_assign_value_dict["inundated_vegetation_conf"], (0, 255, 0))
+        band_assign_value_dict["bright_water_fill"], (120, 120, 240)
+    )
+    #  blue - ocean_mask
+    dswx_ctable.SetColorEntry(band_assign_value_dict["ocean_mask"], (50, 50, 240))
+    # Red - dark land
+    dswx_ctable.SetColorEntry(band_assign_value_dict["dark_land_mask"], (240, 20, 20))
+    # Yellow - Landcover mask
+    dswx_ctable.SetColorEntry(band_assign_value_dict["landcover_mask"], (200, 200, 50))
+    # light gray - Hand mask
+    dswx_ctable.SetColorEntry(band_assign_value_dict["hand_mask"], (200, 200, 200))
+    # Gray - Layover/shadow mask
+    dswx_ctable.SetColorEntry(
+        band_assign_value_dict["layover_shadow_mask"], (128, 128, 128)
+    )
+    # Green - Inundated vegetation
+    dswx_ctable.SetColorEntry(
+        band_assign_value_dict["inundated_vegetation"], (0, 255, 0)
+    )
+    dswx_ctable.SetColorEntry(
+        band_assign_value_dict["inundated_vegetation_conf"], (0, 255, 0)
+    )
 
     # Green + gray (Medium Sea Green) - non-wetland_Inundated vegetation
-    dswx_ctable.SetColorEntry(band_assign_value_dict["wetland_inundated_veg"],
-                              (50, 177, 50))
+    dswx_ctable.SetColorEntry(
+        band_assign_value_dict["wetland_inundated_veg"], (50, 177, 50)
+    )
     # Target areas for Inundated Vegetation
-    dswx_ctable.SetColorEntry(band_assign_value_dict["wetland_nonwater"],
-                              (0, 100, 0))
+    dswx_ctable.SetColorEntry(band_assign_value_dict["wetland_nonwater"], (0, 100, 0))
     # Blue - Water (high confidence)
-    dswx_ctable.SetColorEntry(band_assign_value_dict["wetland_water"],
-                              (0, 50, 127))
+    dswx_ctable.SetColorEntry(band_assign_value_dict["wetland_water"], (0, 50, 127))
     # Steel Teal - bright water
     dswx_ctable.SetColorEntry(
-        band_assign_value_dict["wetland_bright_water_fill"], (60, 110, 120))
+        band_assign_value_dict["wetland_bright_water_fill"], (60, 110, 120)
+    )
     # Sepia - dark land
-    dswx_ctable.SetColorEntry(band_assign_value_dict["wetland_dark_land_mask"],
-                              (120, 60, 20))
+    dswx_ctable.SetColorEntry(
+        band_assign_value_dict["wetland_dark_land_mask"], (120, 60, 20)
+    )
     # Olive Drab
-    dswx_ctable.SetColorEntry(band_assign_value_dict["wetland_landcover_mask"],
-                              (100, 150, 25))
+    dswx_ctable.SetColorEntry(
+        band_assign_value_dict["wetland_landcover_mask"], (100, 150, 25)
+    )
 
     return dswx_ctable
 
@@ -184,12 +178,9 @@ def read_geotiff(input_tif_str, band_ind=None, verbose=True):
     return tifdata
 
 
-def save_raster_gdal(data,
-                     output_file,
-                     geotransform,
-                     projection,
-                     scratch_dir=".",
-                     datatype="float32"):
+def save_raster_gdal(
+    data, output_file, geotransform, projection, scratch_dir=".", datatype="float32"
+):
     """Save images using Gdal
 
     :param data:
@@ -224,8 +215,7 @@ def save_raster_gdal(data,
         gdal_ds.GetRasterBand(1).WriteArray(data)
     else:
         for im_ind in range(0, ndim):
-            gdal_ds.GetRasterBand(im_ind + 1).WriteArray(
-                np.squeeze(data[im_ind, :, :]))
+            gdal_ds.GetRasterBand(im_ind + 1).WriteArray(np.squeeze(data[im_ind, :, :]))
 
     gdal_ds.FlushCache()
     gdal_ds = None
@@ -276,14 +266,13 @@ def save_dswx_product(
 
     band_value_dict = band_assign_value_dict
     sorted_band_keys = sorted(
-        band_value_dict.keys(),
-        key=lambda x: x.lower() == "inundated_vegetation")
+        band_value_dict.keys(), key=lambda x: x.lower() == "inundated_vegetation"
+    )
 
     for band_key in sorted_band_keys:
         if band_key.lower() in dswx_processed_bands_keys:
             dswx_product_value = band_value_dict[band_key]
-            wtr[dswx_processed_bands[band_key.lower()] ==
-                1] = dswx_product_value
+            wtr[dswx_processed_bands[band_key.lower()] == 1] = dswx_product_value
             msg = f"    {band_key.lower()} found {dswx_product_value}"
             if logger is not None:
                 logger.info(msg)
@@ -356,8 +345,7 @@ def _save_as_cog(
     elif ovr_resamp_algorithm is None:
         ovr_resamp_algorithm = "CUBICSPLINE"
 
-    gdal_ds.BuildOverviews(ovr_resamp_algorithm, overviews_list,
-                           gdal.TermProgress_nocb)
+    gdal_ds.BuildOverviews(ovr_resamp_algorithm, overviews_list, gdal.TermProgress_nocb)
 
     del gdal_ds  # close the dataset (Python object and pointers)
     external_overview_file = filename + ".ovr"
@@ -365,8 +353,7 @@ def _save_as_cog(
         os.remove(external_overview_file)
 
     logger.info("        COG step 2: save as COG")
-    temp_file = tempfile.NamedTemporaryFile(dir=scratch_dir,
-                                            suffix=".tif").name
+    temp_file = tempfile.NamedTemporaryFile(dir=scratch_dir, suffix=".tif").name
 
     # Blocks of 512 x 512 => 256 KiB (UInt8) or 1MiB (Float32)
     tile_size = 512
@@ -398,11 +385,7 @@ def _save_as_cog(
     shutil.move(temp_file, filename)
 
 
-def convert_rounded_coordinates(corners,
-                                from_epsg,
-                                to_epsg,
-                                x_snap=30,
-                                y_snap=30):
+def convert_rounded_coordinates(corners, from_epsg, to_epsg, x_snap=30, y_snap=30):
     """Transform and round coordinates from one EPSG coordinate system to another.
 
     :param corners: A list of coordinate pairs (x, y) in the source coordinate reference
@@ -429,24 +412,23 @@ def convert_rounded_coordinates(corners,
     nearest multiples of specified grid sizes (x_snap and y_snap). This is
     useful for aligning coordinates to a regular grid in the destination CRS.
     """
-    transformer = Transformer.from_crs(f"epsg:{from_epsg}",
-                                       f"epsg:{to_epsg}",
-                                       always_xy=True)
+    transformer = Transformer.from_crs(
+        f"epsg:{from_epsg}", f"epsg:{to_epsg}", always_xy=True
+    )
 
     rounded_coords = []
     for corner in corners:
         x, y = transformer.transform(corner[0], corner[1])
         rounded_coords.append(
-            (np.round(x / x_snap) * x_snap, np.round(y / y_snap) * y_snap))
+            (np.round(x / x_snap) * x_snap, np.round(y / y_snap) * y_snap)
+        )
 
     return rounded_coords
 
 
-def change_epsg_tif(input_tif,
-                    output_tif,
-                    epsg_output,
-                    resample_method="nearest",
-                    output_nodata="NaN"):
+def change_epsg_tif(
+    input_tif, output_tif, epsg_output, resample_method="nearest", output_nodata="NaN"
+):
     """Resample the input geotiff image to new EPSG code.
 
     :param input_tif:
@@ -508,10 +490,9 @@ def change_epsg_tif(input_tif,
     gdal.Warp(output_tif, input_tif, options=opt)
 
 
-def get_invalid_area(geotiff_path,
-                     output_path=None,
-                     scratch_dir=None,
-                     lines_per_block=None):
+def get_invalid_area(
+    geotiff_path, output_path=None, scratch_dir=None, lines_per_block=None
+):
     """get invalid areas (NaN) from GeoTiff and save it
     to new GeoTiff
 
@@ -614,22 +595,28 @@ def _get_tile_srs_bbox(
         try:
             polygon_srs.SetAxisMappingStrategy(osr.OAMS_TRADITIONAL_GIS_ORDER)
         except AttributeError:
-            logger.warning("WARNING Could not set the ancillary input SRS axis"
-                           " mapping strategy (SetAxisMappingStrategy())"
-                           " to osr.OAMS_TRADITIONAL_GIS_ORDER")
+            logger.warning(
+                "WARNING Could not set the ancillary input SRS axis"
+                " mapping strategy (SetAxisMappingStrategy())"
+                " to osr.OAMS_TRADITIONAL_GIS_ORDER"
+            )
     transformation = osr.CoordinateTransformation(tile_srs, polygon_srs)
 
     elevation = 0
     tile_x_array = np.zeros((4))
     tile_y_array = np.zeros((4))
     tile_x_array[0], tile_y_array[0], z = transformation.TransformPoint(
-        tile_min_x_utm, tile_max_y_utm, elevation)
+        tile_min_x_utm, tile_max_y_utm, elevation
+    )
     tile_x_array[1], tile_y_array[1], z = transformation.TransformPoint(
-        tile_max_x_utm, tile_max_y_utm, elevation)
+        tile_max_x_utm, tile_max_y_utm, elevation
+    )
     tile_x_array[2], tile_y_array[2], z = transformation.TransformPoint(
-        tile_max_x_utm, tile_min_y_utm, elevation)
+        tile_max_x_utm, tile_min_y_utm, elevation
+    )
     tile_x_array[3], tile_y_array[3], z = transformation.TransformPoint(
-        tile_min_x_utm, tile_min_y_utm, elevation)
+        tile_min_x_utm, tile_min_y_utm, elevation
+    )
     tile_min_y = np.min(tile_y_array)
     tile_max_y = np.max(tile_y_array)
     tile_min_x = np.min(tile_x_array)
@@ -707,8 +694,10 @@ def _create_ocean_mask(
     for layer in shapefile_ds:
         for feature in layer:
             geom = feature.GetGeometryRef()
-            if (geom.GetGeometryName() != "POLYGON"
-                    and geom.GetGeometryName() != "MULTIPOLYGON"):
+            if (
+                geom.GetGeometryName() != "POLYGON"
+                and geom.GetGeometryName() != "MULTIPOLYGON"
+            ):
                 continue
 
             if tile_polygon is None:
@@ -745,14 +734,16 @@ def _create_ocean_mask(
             shapefile_driver = ogr.GetDriverByName("ESRI Shapefile")
 
             temp_shapefile_filename = tempfile.NamedTemporaryFile(
-                dir=scratch_dir, suffix=".shp").name
+                dir=scratch_dir, suffix=".shp"
+            ).name
 
             out_ds = shapefile_driver.CreateDataSource(temp_shapefile_filename)
             out_layer = out_ds.CreateLayer("polygon", tile_srs, ogr.wkbPolygon)
             out_layer.CreateFeature(feature)
 
             gdal_ds = gdal.GetDriverByName("MEM").Create(
-                "", width, length, gdal.GDT_Byte)
+                "", width, length, gdal.GDT_Byte
+            )
             gdal_ds.SetGeoTransform(geotransform)
             gdal_ds.SetProjection(projection)
             gdal.RasterizeLayer(gdal_ds, [1], out_layer, burn_values=[1])
@@ -761,8 +752,7 @@ def _create_ocean_mask(
 
             if temp_files_list is not None:
                 for extension in [".shp", ".prj", ".dbf", ".shx"]:
-                    temp_file = temp_shapefile_filename.replace(
-                        ".shp", extension)
+                    temp_file = temp_shapefile_filename.replace(".shp", extension)
                     if not os.path.isfile(temp_file):
                         continue
                     temp_files_list.append(temp_file)
@@ -829,10 +819,9 @@ def get_raster_block(raster_path, block_param):
         )
 
         # Pad data_block with zeros according to pad_length/pad_width
-        data_block = np.pad(data_block,
-                            block_param.block_pad,
-                            mode="constant",
-                            constant_values=0)
+        data_block = np.pad(
+            data_block, block_param.block_pad, mode="constant", constant_values=0
+        )
 
         if data_block.ndim == 1:
             data_block = data_block[np.newaxis, :]
@@ -840,8 +829,9 @@ def get_raster_block(raster_path, block_param):
     data_blocks = np.array(data_blocks)
 
     if num_bands == 1:
-        data_blocks = np.reshape(data_blocks,
-                                 [data_blocks.shape[1], data_blocks.shape[2]])
+        data_blocks = np.reshape(
+            data_blocks, [data_blocks.shape[1], data_blocks.shape[2]]
+        )
     return data_blocks
 
 
@@ -874,9 +864,11 @@ def write_raster_block(
     ndim = data.ndim
     number_band = 1 if ndim < 3 else data.shape[0]
 
-    data_start_without_pad = (block_param.write_start_line -
-                              block_param.read_start_line +
-                              block_param.block_pad[0][0])
+    data_start_without_pad = (
+        block_param.write_start_line
+        - block_param.read_start_line
+        + block_param.block_pad[0][0]
+    )
     data_end_without_pad = data_start_without_pad + block_param.block_length
 
     if block_param.write_start_line == 0:
@@ -908,19 +900,21 @@ def write_raster_block(
             )
     elif data.ndim == 2:
         data_towrite = data[data_start_without_pad:data_end_without_pad, :]
-        ds_data.GetRasterBand(1).WriteArray(data_towrite,
-                                            xoff=0,
-                                            yoff=block_param.write_start_line)
+        ds_data.GetRasterBand(1).WriteArray(
+            data_towrite, xoff=0, yoff=block_param.write_start_line
+        )
     # data.ndim == 1
     else:
-        ds_data.GetRasterBand(1).WriteArray(np.reshape(data, [1, len(data)]),
-                                            xoff=0,
-                                            yoff=block_param.write_start_line)
+        ds_data.GetRasterBand(1).WriteArray(
+            np.reshape(data, [1, len(data)]), xoff=0, yoff=block_param.write_start_line
+        )
     del ds_data
 
     # Write COG is cog_flag is True and last block.
-    if (block_param.write_start_line + block_param.block_length
-            == block_param.data_length) and cog_flag:
+    if (
+        block_param.write_start_line + block_param.block_length
+        == block_param.data_length
+    ) and cog_flag:
         _save_as_cog(out_raster, scratch_dir)
 
 
@@ -967,9 +961,9 @@ def block_param_generator(lines_per_block, data_shape, pad_shape):
 
         # If applicable, save negative start line as deficit
         # to account for later
-        read_start_line, start_line_deficit = ((0, read_start_line)
-                                               if read_start_line < 0 else
-                                               (read_start_line, 0))
+        read_start_line, start_line_deficit = (
+            (0, read_start_line) if read_start_line < 0 else (read_start_line, 0)
+        )
 
         # Initial guess at number lines to read; accounting
         # for negative start at the end
@@ -1079,8 +1073,7 @@ def merge_binary_layers(
     """
 
     if len(layer_list) != len(value_list):
-        raise ValueError(
-            "Number of layers does not match with number of values")
+        raise ValueError("Number of layers does not match with number of values")
 
     # Getting metadata from the reference layer
     meta_info = get_meta_from_tif(layer_list[0])
@@ -1088,8 +1081,7 @@ def merge_binary_layers(
 
     # Setting padding for block processing
     pad_shape = (0, 0)
-    block_params = block_param_generator(lines_per_block, data_shape,
-                                         pad_shape)
+    block_params = block_param_generator(lines_per_block, data_shape, pad_shape)
 
     # Determine the logical operation function
     logical_function = np.logical_or if mode == "or" else np.logical_and
@@ -1106,7 +1098,8 @@ def merge_binary_layers(
                 combined_binary_image = binary_image
             else:
                 combined_binary_image = logical_function(
-                    combined_binary_image, binary_image).astype(np.uint8)
+                    combined_binary_image, binary_image
+                ).astype(np.uint8)
 
         # Writing the merged block to the output raster
         write_raster_block(
@@ -1134,16 +1127,16 @@ def intensity_display(intensity, outputdir, pol, immin=-30, immax=0):
     """
     plt.figure(figsize=(20, 20))
     _, ax = plt.subplots(1, 1, figsize=(15, 15))
-    ax.imshow(10 * np.log10(intensity),
-              cmap=plt.get_cmap("gray"),
-              vmin=immin,
-              vmax=immax)
+    ax.imshow(
+        10 * np.log10(intensity), cmap=plt.get_cmap("gray"), vmin=immin, vmax=immax
+    )
     plt.title("RTC")
     plt.savefig(os.path.join(outputdir, f"RTC_intensity_{pol}"))
 
 
-def block_threshold_visualization(intensity, block_row, block_col,
-                                  threshold_tile, output_dir, fig_name):
+def block_threshold_visualization(
+    intensity, block_row, block_col, threshold_tile, output_dir, fig_name
+):
     """Visualize an intensity image overlaid with threshold values from
     specified blocks/subtiles.
 
@@ -1179,8 +1172,9 @@ def block_threshold_visualization(intensity, block_row, block_col,
             i_end = min((i + 1) * block_row, rows)
             j_end = min((j + 1) * block_col, cols)
 
-            threshold_oversample[i * block_row:i_end,
-                                 j * block_col:j_end] = (threshold_tile[i, j])
+            threshold_oversample[i * block_row : i_end, j * block_col : j_end] = (
+                threshold_tile[i, j]
+            )
 
             # Draw the tile rectangle
             plt.plot(
@@ -1197,8 +1191,7 @@ def block_threshold_visualization(intensity, block_row, block_col,
     plt.close()
 
 
-def block_threshold_visualization_rg(intensity, threshold_dict, outputdir,
-                                     figname):
+def block_threshold_visualization_rg(intensity, threshold_dict, outputdir, figname):
     """Visualize an intensity image overlaid with threshold values from
     provided blocks/subtiles.
 
@@ -1241,8 +1234,8 @@ def block_threshold_visualization_rg(intensity, threshold_dict, outputdir,
         threshold_overlay = np.full((rows, cols), np.nan)
 
         for threshold, coords in zip(
-                threshold_dict["array"][band_index],
-                threshold_dict["subtile_coord"][band_index],
+            threshold_dict["array"][band_index],
+            threshold_dict["subtile_coord"][band_index],
         ):
 
             start_row, end_row, start_col, end_col = coords
@@ -1256,11 +1249,7 @@ def block_threshold_visualization_rg(intensity, threshold_dict, outputdir,
             )
 
         # Overlay the threshold values on top of the intensity image
-        plt.imshow(threshold_overlay,
-                   alpha=0.3,
-                   cmap="jet",
-                   vmin=-20,
-                   vmax=-14)
+        plt.imshow(threshold_overlay, alpha=0.3, cmap="jet", vmin=-20, vmax=-14)
 
         # Save the visualization to file
         plt.savefig(os.path.join(outputdir, f"{figname}_{band_index}"))
@@ -1319,26 +1308,29 @@ def _compute_browse_array(
 
     # Discard the Partial Surface Water Aggressive class
     if exclude_inundated_vegetation:
-        browse_arr[browse_arr ==
-                   band_assign_value_dict["inundated_vegetation"]] = (
-                       band_assign_value_dict["water"])
+        browse_arr[browse_arr == band_assign_value_dict["inundated_vegetation"]] = (
+            band_assign_value_dict["water"]
+        )
 
     if set_not_water_to_nodata:
         browse_arr[browse_arr == band_assign_value_dict["nonwater"]] = (
-            band_assign_value_dict["no_data"])
+            band_assign_value_dict["no_data"]
+        )
 
     if set_hand_mask_to_nodata:
         browse_arr[browse_arr == band_assign_value_dict["hand_mask"]] = (
-            band_assign_value_dict["no_data"])
+            band_assign_value_dict["no_data"]
+        )
 
     if set_layover_shadow_to_nodata:
-        browse_arr[browse_arr ==
-                   band_assign_value_dict["layover_shadow_mask"]] = (
-                       band_assign_value_dict["no_data"])
+        browse_arr[browse_arr == band_assign_value_dict["layover_shadow_mask"]] = (
+            band_assign_value_dict["no_data"]
+        )
 
     if set_ocean_masked_to_nodata:
         browse_arr[browse_arr == band_assign_value_dict["ocean_mask"]] = (
-            band_assign_value_dict["no_data"])
+            band_assign_value_dict["no_data"]
+        )
 
     return browse_arr
 
@@ -1353,10 +1345,10 @@ def _collapse_wtr_classes(interpreted_layer):
 
     """
     collapsed_interpreted_layer = np.full_like(
-        interpreted_layer, band_assign_value_dict["no_data"])
+        interpreted_layer, band_assign_value_dict["no_data"]
+    )
     for original_value, new_value in collapse_wtr_classes_dict.items():
-        collapsed_interpreted_layer[interpreted_layer ==
-                                    original_value] = new_value
+        collapsed_interpreted_layer[interpreted_layer == original_value] = new_value
     return collapsed_interpreted_layer
 
 
@@ -1559,10 +1551,12 @@ def create_browse_image(
     browse_ctable = get_interpreted_dswx_s1_ctable()
     if save_tif_to_output_dir:
         browse_image_geotiff_filename = os.path.join(
-            output_dir_path, f"{browser_filename}.tif")
+            output_dir_path, f"{browser_filename}.tif"
+        )
     else:
         browse_image_geotiff_filename = os.path.join(
-            scratch_dir, f"{browser_filename}.tif")
+            scratch_dir, f"{browser_filename}.tif"
+        )
 
     _save_array(
         input_array=browse_arr,
@@ -1579,8 +1573,7 @@ def create_browse_image(
     # Convert the geotiff to a resized PNG to create the browse image PNG
     geotiff2png(
         src_geotiff_filename=browse_image_geotiff_filename,
-        dest_png_filename=os.path.join(output_dir_path,
-                                       f"{browser_filename}.png"),
+        dest_png_filename=os.path.join(output_dir_path, f"{browser_filename}.png"),
         output_height=browse_image_height,
         output_width=browse_image_width,
         logger=logger,
@@ -1607,8 +1600,10 @@ def check_gdal_raster_s3(path_raster_s3: str, raise_error=True):
 
     """
     if not path_raster_s3.startswith("/vsis3/"):
-        raise RuntimeError(f"The raster path {path_raster_s3} is not a "
-                           "valid format for GDAL raster in S3 bucket")
+        raise RuntimeError(
+            f"The raster path {path_raster_s3} is not a "
+            "valid format for GDAL raster in S3 bucket"
+        )
 
     # Currently `gdal.DontUseExceptions()` is called in this code.
     # In that case, failed `gdal.Open()` will return None
@@ -1659,11 +1654,9 @@ def _calculate_output_bounds(geotransform, width, length, output_spacing):
     return [x_min, y_min, x_max, y_max]
 
 
-def _perform_warp_in_memory(input_file,
-                            output_spacing,
-                            output_bounds,
-                            scratch,
-                            debug=False):
+def _perform_warp_in_memory(
+    input_file, output_spacing, output_bounds, scratch, debug=False
+):
     """Perform a geospatial warp operation on an input file using GDAL, creating an in-memory output
     dataset with specified spatial resolution and bounding box.
 
@@ -1693,9 +1686,9 @@ def _perform_warp_in_memory(input_file,
             resampleAlg="nearest",
             format="GTIFF",  # Use memory as the output format
         )
-        output_ds = gdal.Warp(f"{scratch}/debug_output.tif",
-                              input_ds,
-                              options=warp_options)
+        output_ds = gdal.Warp(
+            f"{scratch}/debug_output.tif", input_ds, options=warp_options
+        )
     else:
         warp_options = gdal.WarpOptions(
             xRes=output_spacing,
@@ -1722,12 +1715,9 @@ def _perform_warp_in_memory(input_file,
         return np.stack(band_arrays, axis=0)
 
 
-def partial_water_product(input_file,
-                          output_spacing,
-                          scratch_dir,
-                          target_label,
-                          threshold,
-                          logger=None):
+def partial_water_product(
+    input_file, output_spacing, scratch_dir, target_label, threshold, logger=None
+):
     """Generates a water product from a satellite image, identifying areas
     of full and partial water based on specified thresholding of aggregated pixel values.
 
@@ -1752,15 +1742,13 @@ def partial_water_product(input_file,
 
     # Since the pixel spacing of input and output are different,
     # the spatial extents should be adjusted to align the grid.
-    output_bounds = _calculate_output_bounds(geotransform, meta_info["width"],
-                                             meta_info["length"],
-                                             output_spacing)
+    output_bounds = _calculate_output_bounds(
+        geotransform, meta_info["width"], meta_info["length"], output_spacing
+    )
 
-    output_array = _perform_warp_in_memory(input_file,
-                                           output_spacing,
-                                           output_bounds,
-                                           scratch=scratch_dir,
-                                           debug=False)
+    output_array = _perform_warp_in_memory(
+        input_file, output_spacing, output_bounds, scratch=scratch_dir, debug=False
+    )
 
     input_spacing = geotransform[1]
     # Assumption of this function is that the spatial spacings are integer
@@ -1820,11 +1808,11 @@ def _aggregate_10m_to_30m_conv(image, ratio, normalize_flag):
 
     # Since the convolution is done with stride 1,
     # we need to downsample the result by a factor of ratio
-    aggregated_data = aggregated_data[ratio // 2::ratio, ratio // 2::ratio]
+    aggregated_data = aggregated_data[ratio // 2 :: ratio, ratio // 2 :: ratio]
     if normalize_flag:
         valid_area = image > 0
         pixel_count = convolve2d(valid_area, kernel, mode="same")
-        pixel_count = pixel_count[ratio // 2::ratio, ratio // 2::ratio]
+        pixel_count = pixel_count[ratio // 2 :: ratio, ratio // 2 :: ratio]
 
         aggregated_data = aggregated_data / pixel_count
 
