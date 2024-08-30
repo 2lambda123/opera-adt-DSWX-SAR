@@ -48,18 +48,17 @@ def crop_and_save_mgrs_tile_spacing(
     """Crop the product along the MGRS tile grid and
     save it as a Cloud-Optimized GeoTIFF (COG).
 
-    :param source_tif_path:
-    :param output_dir_path:
-    :param output_tif_name:
-    :param output_bbox:
-    :param output_epsg:
-    :param output_spacing:
-    :param output_format:
-    :param metadata:
-    :param cog_compression:
-    :param cog_nbits:
-    :param interpolation_method:  (Default value = "nearest")
-
+    :param source_tif_path: param output_dir_path:
+    :param output_tif_name: param output_bbox:
+    :param output_epsg: param output_spacing:
+    :param output_format: param metadata:
+    :param cog_compression: param cog_nbits:
+    :param interpolation_method: Default value = "nearest")
+    :param output_dir_path: 
+    :param output_bbox: 
+    :param output_spacing: 
+    :param metadata: 
+    :param cog_nbits: 
 
     """
     input_tif_obj = gdal.Open(source_tif_path)
@@ -109,8 +108,7 @@ def find_intersecting_frames_with_bbox(ref_bbox, ref_epsg, input_rtc_files):
     :type ref_epsg: int
     :param input_rtc_dirs: List of rtc directories
     :type input_rtc_dirs: list
-    :param input_rtc_files:
-
+    :param input_rtc_files: 
 
     """
     minx, miny, maxx, maxy = ref_bbox
@@ -159,7 +157,6 @@ def get_intersecting_mgrs_tiles_list_from_db(
     :param track_number: Track number (or relative orbit number) to specify
         MGRS tile collection (Default value = None)
     :type track_number: int, optional
-
 
     """
     # Load the raster data
@@ -226,7 +223,7 @@ def get_intersecting_mgrs_tiles_list_from_db(
 def run(cfg):
     """Run save mgrs tiles with parameters in cfg dictionary
 
-    :param cfg:
+    :param cfg: 
 
     """
     logger.info("Starting DSWx-NI save_mgrs_tiles")

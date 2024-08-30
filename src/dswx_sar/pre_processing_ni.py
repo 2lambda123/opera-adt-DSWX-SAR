@@ -19,7 +19,7 @@ logger = logging.getLogger("dswx_sar")
 def run(cfg):
     """
 
-    :param cfg:
+    :param cfg: 
 
     """
 
